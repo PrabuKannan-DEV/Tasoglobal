@@ -17,9 +17,9 @@ use App\Http\Controllers\TimeTableController;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return redirect()->route('subjects.index');
 });
 
 Route::resource('subjects', SubjectController::class)->except('delete', 'edit', 'update');
 Route::resource('faculties', FacultyController::class)->except('delete', 'edit', 'update');
-Route::get('time_tables/create', [TimeTableController::class, 'create']);
+Route::get('time_tables/create', [TimeTableController::class, 'create'])->name('time_tables.create');
