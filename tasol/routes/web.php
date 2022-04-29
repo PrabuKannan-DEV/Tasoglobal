@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FacultyController;
+use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\TimeTableController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +17,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
+
+Route::resource('subjects', SubjectController::class)->except('delete', 'edit', 'update');
+Route::resource('faculties', FacultyController::class)->except('delete', 'edit', 'update');
+Route::get('time_tables/create', [TimeTableController::class, 'create']);
