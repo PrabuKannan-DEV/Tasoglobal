@@ -14,7 +14,10 @@ class FacultyController extends Controller
 
     public function store()
     {
-        $data = request()->all();
+        $data = request()->validate([
+            'name' => 'string|required|max:199|min:1',
+            'email' => 'required|email'
+        ]);
         unset($data['_token']);
         Faculty::create($data);
         return redirect()->route('faculties.index');

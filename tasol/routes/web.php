@@ -23,3 +23,5 @@ Route::get('/', function () {
 Route::resource('subjects', SubjectController::class)->except('delete', 'edit', 'update');
 Route::resource('faculties', FacultyController::class)->except('delete', 'edit', 'update');
 Route::get('time_tables/create', [TimeTableController::class, 'create'])->name('time_tables.create');
+Route::get('time_tables', [TimeTableController::class, 'index'])->name('time_tables.index');
+

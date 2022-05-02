@@ -51,8 +51,14 @@ class TimeTable extends Component
      * @return response()
      */
     private function resetInputFields(){
-        $this->name = '';
-        $this->phone = '';
+        $this->subject_id = '';
+        $this->faculty_id = '';
+        $this->date = '';
+        $this->term_id = '';
+        $this->duration = '';
+        $this->start_time = '';
+        $this->subject_id = '';
+        $this->stop_time = '';
     }
 
     /**
@@ -66,13 +72,13 @@ class TimeTable extends Component
                 'subject_id.0' => 'required',
                 'faculty_id.0' => 'required',
                 'start_time.0' => 'required',
-                'stop_time.0' => 'required',
+                'stop_time.0' => 'date:required_with:start_time.0|after_or_equal:start_date.0',
                 'duration.0' => 'required',
                 'duration.*' => 'required',
                 'subject_id.*' => 'required',
                 'faculty_id.*' => 'required',
                 'start_time.*' => 'required',
-                'stop_time.*' => 'required',
+                'stop_time.*' => 'date|required_with:start_time.*|after_or_equal:start_date.*',
                 'term_id'=>'required',
                 'date' =>'required',
             ],
@@ -91,8 +97,9 @@ class TimeTable extends Component
                 'date.required' => 'date field is required',
             ]
         );
+        $this->subject_id = is_array($this->subject_id)? $this->subject_id : [$this->subject_id];
 
-        foreach ($this->subjects as $key => $value) {
+        foreach ($this->subject_id as $key => $value) {
             FacultyTimeTable::create([
                 'subject_id' => $this->subject_id[$key],
                 'faculty_id' => $this->faculty_id[$key],
@@ -108,6 +115,6 @@ class TimeTable extends Component
 
         $this->resetInputFields();
 
-        session()->flash('message', 'Contact Has Been Created Successfully.');
+        session()->flash('message', 'Time tables created successfully!');
     }
 }

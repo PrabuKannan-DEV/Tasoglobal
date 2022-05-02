@@ -21,7 +21,10 @@ class SubjectController extends Controller
 
     public function store()
     {
-        $data = request()->all();
+        $data = request()->validate([
+            'name' => 'string|required|max:199|min:1',
+            'term_id' => 'required|integer'
+        ]);
         unset($data['_token']);
         $subject = Subject::create($data);
         return redirect()->route('subjects.index');
