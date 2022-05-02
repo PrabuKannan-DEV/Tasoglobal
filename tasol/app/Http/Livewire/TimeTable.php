@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Carbon\Carbon;
 use App\Models\Term;
 use App\Models\Faculty;
 use App\Models\Subject;
@@ -72,13 +73,13 @@ class TimeTable extends Component
                 'subject_id.0' => 'required',
                 'faculty_id.0' => 'required',
                 'start_time.0' => 'required',
-                'stop_time.0' => 'date:required_with:start_time.0|after_or_equal:start_date.0',
+                'stop_time.0' => 'required_with:start_time.0|after_or_equal:start_time.0',
                 'duration.0' => 'required',
                 'duration.*' => 'required',
                 'subject_id.*' => 'required',
                 'faculty_id.*' => 'required',
                 'start_time.*' => 'required',
-                'stop_time.*' => 'date|required_with:start_time.*|after_or_equal:start_date.*',
+                'stop_time.*' => 'required_with:start_time.*|after_or_equal:start_time.*',
                 'term_id'=>'required',
                 'date' =>'required',
             ],
@@ -103,8 +104,8 @@ class TimeTable extends Component
             FacultyTimeTable::create([
                 'subject_id' => $this->subject_id[$key],
                 'faculty_id' => $this->faculty_id[$key],
-                'session_start_time' => $this->start_time[$key],
-                'session_stop_time' => $this->stop_time[$key],
+                'session_start_time' => Carbon::parse($this->start_time[$key]),
+                'session_stop_time' => Carbon::parse($this->stop_time[$key]),
                 'duration' => $this->duration[$key],
                 'date'=>$this->date,
                 'term_id' =>$this->term_id

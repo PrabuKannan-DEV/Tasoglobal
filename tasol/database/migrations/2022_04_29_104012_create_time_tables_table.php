@@ -19,8 +19,8 @@ return new class extends Migration
             $table->foreignId('subject_id');
             $table->date('date');
             $table->foreignId('term_id');
-            $table->dateTime('session_start_time');
-            $table->dateTime('session_stop_time');
+            $table->timestamp('session_start_time');
+            $table->timestamp('session_stop_time');
             $table->string('duration');
             $table->timestamps();
         });

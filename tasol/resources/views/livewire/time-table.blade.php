@@ -1,5 +1,8 @@
 <div class="container">
     <div>
+        @if ($errors->any())
+            {!! implode('', $errors->all('<div class="alert alert-danger">:message</div>')) !!}
+        @endif
         @if (session()->has('message'))
             <div class="alert alert-success">
                 {{ session('message') }}
@@ -8,14 +11,16 @@
         <div class="d-flex justify-content-between">
             <h1>Create Time Table</h1>
             <div class="">
-                <a href="{{route('time_tables.index')}}" class="btn btn-dark">Index</a>
+                <a href="{{ route('time_tables.index') }}" class="btn btn-dark">Index</a>
             </div>
         </div>
+
         <form>
             <div class="card row">
                 <div class="form-group">
                     <label for="" class="form-label col-2">Term
                         <select name="term_id" id="" wire:model="term_id" class="form-control col-4">
+                            <option value="" selected>Select</option>
                             @foreach ($terms as $term)
                                 <option value="{{ $term->id }}">{{ $term->name }}</option>
                             @endforeach
@@ -24,7 +29,7 @@
                             <span class="text-danger error">{{ $message }}</span>
                         @enderror
                     </label>
-                    <label for="" class="form-label col-2">Date
+                    <label for="" class="form-label col-2 ml-2">Date
                         <input type="date" wire:model="date" class="form-control col-4">
                         @error('date')
                             <span class="text-danger error">{{ $message }}</span>
@@ -48,7 +53,7 @@
                         <td>
                             <select name="subject_id.0" id="" class="form-control" wire:model="subject_id.0">
                                 @if ($subjects)
-                                    <option disabled selected>Select</option>
+                                    <option value="" selected>Select</option>
                                     @foreach ($subjects as $subject)
                                         <option value="{{ $subject->id }}">{{ $subject->name }}</option>
                                     @endforeach
@@ -60,7 +65,7 @@
                         </td>
                         <td>
                             <select name="faculty_id.0" id="" class="form-control" wire:model="faculty_id.0">
-                                <option value="" selected disabled>Select</option>
+                                <option value="" selected>Select</option>
                                 @foreach ($faculties as $faculty)
                                     <option value="{{ $faculty->id }}">{{ $faculty->name }}</option>
                                 @endforeach
@@ -70,7 +75,7 @@
                             @enderror
                         </td>
                         <td>
-                            <input type="datetime-local" class="form-control" wire:model="start_time.0"
+                            <input type="time" class="form-control" wire:model="start_time.0"
                                 placeholder="Enter start_time">
                             @error('start_time.0')
                                 <span class="text-danger error">{{ $message }}</span>
@@ -84,7 +89,7 @@
                             @enderror
                         </td>
                         <td>
-                            <input type="datetime-local" class="form-control" wire:model="stop_time.0"
+                            <input type="time" class="form-control" wire:model="stop_time.0"
                                 placeholder="Enter stop_time">
                             @error('stop_time.0')
                                 <span class="text-danger error">{{ $message }}</span>
@@ -103,7 +108,7 @@
                             <td>
                                 <select name="subject_id" id="" class="form-control"
                                     wire:model="subject_id.{{ $value }}">
-                                    <option value="" selected disabled>Select</option>
+                                    <option value="" selected>Select</option>
                                     @if ($subjects)
                                         @foreach ($subjects as $subject)
                                             <option value="{{ $subject->id }}">{{ $subject->name }}</option>
@@ -114,7 +119,7 @@
                             <td>
                                 <select name="faculty_id" id="" class="form-control"
                                     wire:model="faculty_id.{{ $value }}">
-                                    <option value="" disabled selected>Select</option>
+                                    <option value="" selected>Select</option>
                                     @foreach ($faculties as $faculty)
                                         <option value="{{ $faculty->id }}">{{ $faculty->name }}</option>
                                     @endforeach
@@ -124,8 +129,8 @@
                                 @enderror
                             </td>
                             <td>
-                                <input type="datetime-local" class="form-control"
-                                    wire:model="start_time.{{ $value }}" placeholder="Enter start_time">
+                                <input type="time" class="form-control" wire:model="start_time.{{ $value }}"
+                                    placeholder="Enter start_time">
                                 @error('start_time.{{ $value }}')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
@@ -138,8 +143,8 @@
                                 @enderror
                             </td>
                             <td>
-                                <input type="datetime-local" class="form-control"
-                                    wire:model="stop_time.{{ $value }}" placeholder="Enter stop_time">
+                                <input type="time" class="form-control" wire:model="stop_time.{{ $value }}"
+                                    placeholder="Enter stop_time">
                                 @error('stop_time.{{ $value }}')
                                     <span class="text-danger error">{{ $message }}</span>
                                 @enderror
